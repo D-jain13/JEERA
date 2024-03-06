@@ -15,7 +15,7 @@ public class UserDTO {
 	
 	private String fullName;
 	
-	private String teamId;
+	private String teamName;
 
 	public String getUsername() {
 		return username;
@@ -41,25 +41,28 @@ public class UserDTO {
 		this.fullName = fullName;
 	}
 
-	public String getTeamId() {
-		return teamId;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setTeamId(String teamId) {
-		this.teamId = teamId;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 	public UserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public UserDTO(String username, String password, String fullName, String teamId) {
+	public UserDTO(String username,String password) {
+		this.username = username;
+		this.password = password;
+	}
+	public UserDTO(String username, String password, String fullName, String teamName) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.fullName = fullName;
-		this.teamId = teamId;
+		this.teamName = teamName;
 	}
 
 }
