@@ -1,11 +1,17 @@
 package com.dhairya.JEERA.entity;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +32,18 @@ public class User {
 	private String fullName;
 	
 	@ManyToOne
-	@JoinColumn(name="team_id")
 	private Team team;
+	
+	@OneToMany(mappedBy = "assignee")
+	private Set<Task> assignedTasks;
+	
+	@OneToMany(mappedBy = "reportee")
+	private Set<Task> reportedTasks;
+	
+	
+	@ManyToMany(mappedBy = "project_members")
+	private Set<Project> projects = new HashSet<>();
+	
 
 	public String getId() {
 		return id;

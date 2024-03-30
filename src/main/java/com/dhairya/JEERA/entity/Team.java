@@ -1,6 +1,6 @@
 package com.dhairya.JEERA.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,7 +15,7 @@ public class Team {
 	private String name;
 	
 	@OneToMany(mappedBy = "team")
-	private List<User> users;
+	private Set<User> users;
 
 	public String getId() {
 		return id;
@@ -33,11 +33,11 @@ public class Team {
 		this.name = name;
 	}
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
@@ -46,7 +46,7 @@ public class Team {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Team(String id, String name, List<User> users) {
+	public Team(String id, String name, Set<User> users) {
 		super();
 		this.id = id;
 		this.name = name;

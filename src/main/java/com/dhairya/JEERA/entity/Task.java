@@ -8,6 +8,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 public class Task {
@@ -26,14 +30,22 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private Priority priority;
 	
-	private String assignee;
-	
-	private String reportee;
+	@Enumerated(EnumType.STRING)
+	private Category category;
 	
 	private Date creation_date;
 	
 	private Date due_date;
-
+	
+	@ManyToOne
+	private Project project;
+	
+	@ManyToOne
+	private User assignee;
+	
+	@ManyToOne
+	private User reportee;
+	
 	public String getTask_id() {
 		return task_id;
 	}
@@ -50,12 +62,12 @@ public class Task {
 		this.title = title;
 	}
 
-	public String getDesc() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.description = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Status getStatus() {
@@ -74,19 +86,19 @@ public class Task {
 		this.priority = priority;
 	}
 
-	public String getAssignee() {
-		return assignee;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setAssignee(String assignee) {
-		this.assignee = assignee;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
-	public String getReportee() {
+	public User getReportee() {
 		return reportee;
 	}
 
-	public void setReportee(String reportee) {
+	public void setReportee(User reportee) {
 		this.reportee = reportee;
 	}
 
@@ -106,23 +118,42 @@ public class Task {
 		this.due_date = due_date;
 	}
 
-	public Task(String title, String description, Status status, Priority priority, String assignee, String reportee,
-			Date creation_date, Date due_date) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.status = status;
-		this.priority = priority;
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public User getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(User assignee) {
 		this.assignee = assignee;
-		this.reportee = reportee;
-		this.creation_date = creation_date;
-		this.due_date = due_date;
 	}
 
 	public Task() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public Task(String title, String description, Status status, Priority priority, Category category, User reportee,
+			Date creation_date, Date due_date, Project project, User assignee) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.status = status;
+		this.priority = priority;
+		this.category = category;
+		this.reportee = reportee;
+		this.creation_date = creation_date;
+		this.due_date = due_date;
+		this.project = project;
+		this.assignee = assignee;
+	}
+	
 	
 }
 
@@ -132,7 +163,12 @@ enum Status{
 	DONE
 }
 enum Priority{
+	CRITICAL,
 	HIGH,
 	MEDIUM,
 	LOW
+}
+enum Category{
+	task,
+	bug
 }
