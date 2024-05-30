@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dhairya.JEERA.entity.Project;
+import com.dhairya.JEERA.entity.ProjectDTO;
+import com.dhairya.JEERA.repository.ProjectRepo;
 import com.dhairya.JEERA.service.ProjectService;
 
 @RestController
@@ -22,6 +24,8 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 	
+	@Autowired
+	ProjectRepo projectRepo;
 	@GetMapping("/getAll")
 	private ResponseEntity<List<Project>> getAllProjects(){
 		return projectService.getAllProjects();
@@ -33,12 +37,17 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/create")
-	private ResponseEntity<String> createProject(@RequestBody Project project){
+	private ResponseEntity<String> createProject(@RequestBody ProjectDTO project){
 		return projectService.createProject(project);
 	}
 	
 	@PutMapping("/update/{id}")
-	private ResponseEntity<String> updateProjectById(@RequestBody Project project){
-		return projectService.updateProjectById(project);
+	private ResponseEntity<String> updateProjectById(@PathVariable String id ,@RequestBody ProjectDTO project){
+		return projectService.updateProjectById(id,project);
+	}
+	
+	@PostMapping("/delete/{id}")
+	private ResponseEntity<String> deleteProjectById(@PathVariable String id) {
+		return projectService.deleteProjectById(id);
 	}
 }

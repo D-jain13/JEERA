@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +19,7 @@ import jakarta.persistence.OneToMany;
 public class Project {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
 	
 	private String name;
@@ -25,12 +27,15 @@ public class Project {
 	private String description;
 	
 	@ManyToOne
+	@JsonManagedReference
 	private User lead;
 	
 	@OneToMany(mappedBy = "project")
+	@JsonManagedReference
 	private Set<Task> tasks = new HashSet<>();
 	
 	@ManyToMany
+	@JsonManagedReference
 	private Set<User> project_members = new HashSet<>();
 	
 	private LocalDate created;
