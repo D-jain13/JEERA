@@ -1,6 +1,10 @@
 package com.dhairya.JEERA.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,17 +37,30 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private Category category;
 	
-	private Date creation_date;
+	private LocalDate creation_date;
 	
-	private Date due_date;
+	private LocalDate due_date;
 	
+	private LocalDate last_updated;
+	
+	public LocalDate getLast_updated() {
+		return last_updated;
+	}
+
+	public void setLast_updated(LocalDate last_updated) {
+		this.last_updated = last_updated;
+	}
+
 	@ManyToOne
+	@JsonBackReference
 	private Project project;
 	
 	@ManyToOne
+	@JsonManagedReference
 	private User assignee;
 	
 	@ManyToOne
+	@JsonManagedReference
 	private User reportee;
 	
 	public String getTask_id() {
@@ -102,19 +119,19 @@ public class Task {
 		this.reportee = reportee;
 	}
 
-	public Date getCreation_date() {
+	public LocalDate getCreation_date() {
 		return creation_date;
 	}
 
-	public void setCreation_date(Date creation_date) {
+	public void setCreation_date(LocalDate creation_date) {
 		this.creation_date = creation_date;
 	}
 
-	public Date getDue_date() {
+	public LocalDate getDue_date() {
 		return due_date;
 	}
 
-	public void setDue_date(Date due_date) {
+	public void setDue_date(LocalDate due_date) {
 		this.due_date = due_date;
 	}
 
@@ -140,7 +157,7 @@ public class Task {
 	}
 
 	public Task(String title, String description, Status status, Priority priority, Category category, User reportee,
-			Date creation_date, Date due_date, Project project, User assignee) {
+			LocalDate creation_date, LocalDate due_date, LocalDate last_updated,  Project project) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -151,9 +168,8 @@ public class Task {
 		this.creation_date = creation_date;
 		this.due_date = due_date;
 		this.project = project;
-		this.assignee = assignee;
+		this.last_updated = last_updated;
 	}
-	
 	
 }
 
